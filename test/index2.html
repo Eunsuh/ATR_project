@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	   <head>
+			 <meta charset="UTF=8">
+			 <title>ATR</title>
+	   </head>
+	   <body>
+			 This is the test
+	   </body>
+	   <form id='box' action = "/"  method ="POST">
+			 <input type = "text" id="transcript"  placeholder="Speak" name="what">
+			 <button onClick="startConverting();" type="button">Speak</button>
+	   </form>
+</html>
+
+	   <script>
+			 
+			 function startConverting(){
+
+				    //check this browser is available for using Google API(chrome,,)
+
+				    if('webkitSpeechRecognition'in window){
+						  
+						  var recognizer = new webkitSpeechRecognition();
+
+						  document.getElementById('transcript').value = '';
+
+						  recognizer.continuous = false;
+						  recognizer.interimResults = false;
+
+						  recognizer.lang = "en-US";
+						  recognizer.start();
+
+						  recognizer.onresult = function(e){
+								document.getElementById('transcript').value = e.results[0][0].transcript;
+								recognizer.stop();
+								document.getElementById('box').submit();
+			 };
+						  recognizer.onerror = function(e){
+								recognizer.stop();
+						  }
+				    }
+			 }
+	   </script>
